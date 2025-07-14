@@ -1,0 +1,5 @@
+<div class="grid grid-cols-3 gap-3">
+    @for (product of products(); track $index) {
+        <product-item [product]="product"/>
+    }
+</div>

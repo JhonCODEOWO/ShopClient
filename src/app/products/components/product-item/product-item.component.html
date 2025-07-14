@@ -1,0 +1,12 @@
+<a class="card bg-base-100 w-96 shadow-sm hover:cursor-pointer" [routerLink]="['/view', product().slug]">
+  <figure>
+    <img
+      [src]="product().image_url"
+      [alt]="product().name" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">{{product().name}}</h2>
+    <p>{{product().description}}</p>
+    <p class="text-xl">{{product().price | currency: 'MXN'}}</p>
+  </div>
+</a>
