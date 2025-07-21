@@ -1,0 +1,7 @@
+<fieldset class="fieldset" [formGroup]="fg()">
+    <legend class="fieldset-legend">{{label()}}</legend>
+    <input [type]="type()" [formControlName]="controlName()" class="input" [placeholder]="placeholder()">
+    @if (fg().controls[controlName()].dirty) {
+        <p class="text-error">{{formHelpers.showError(fg().controls[controlName()])}}</p>
+    }
+</fieldset>

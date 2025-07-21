@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ProductService {
-  route = `${environment.API_URL}/api/products`;
+  route = `${environment.API_URL}/products`;
   httpClient = inject(HttpClient);
 
   searchProducts(): Observable<PaginatedResponse<Product>>{
