@@ -1,0 +1,37 @@
+<section class="m-4">
+    <h2 class="text-4xl">Tu carrito</h2>
+    <main class="grid grid-cols-2 gap-x-10 mt-3">
+        <ul class="list bg-base-100 rounded-box shadow-md border border-accent relative">
+            @for (item of cartService._items(); track item.product.id; let index = $index) {
+            <li class="list-row items-center">
+                <div class="text-4xl font-thin opacity-30 tabular-nums">{{index + 1}}</div>
+                <div><img class="size-32 rounded-box" [src]="item.product.image_url" /></div>
+                <div class="list-col-grow items-start flex flex-col">
+                    <h3 class="text-2xl">{{item.product.name}}</h3>
+                    <button class="text-error cursor-pointer"
+                        (click)="cartService.removeItem(item.product.id)">Eliminar</button>
+                </div>
+                <div class="flex items-center gap-4 rounded border border-primary p-3">
+                    <button class="text-info text-xl font-black disabled:text-accent cursor-pointer"
+                        (click)="cartService.putItem(item.product)" [disabled]="item.quantity == item.product.stock"> +
+                    </button>
+                    <p class="text-xl">{{item.quantity}}</p>
+                    <button class="text-info text-xl font-black disabled:text-accent cursor-pointer"
+                        (click)="cartService.putItem(item.product, -1)" [disabled]="item.quantity === 1"> - </button>
+                </div>
+            </li>
+            } @empty {
+                <li class="list-row flex items-center justify-center text-info absolute h-full w-full">Añade productos a tu carrito para continuar</li>
+            }
+        </ul>
+
+        <section class="border border-accent p-3">
+            <h3 class="text-3xl mb-3">Confirma tu compra</h3>
+            <p class="flex justify-between text-xl mb-4">
+                <span>Total:</span>
+                <span>{{cartService._subtotal() | currency}}</span>
+            </p>
+            <button class="btn btn-info w-full" [disabled]="cartService._items().length === 0">Continuar con la compra</button>
+        </section>
+    </main>
+</section>

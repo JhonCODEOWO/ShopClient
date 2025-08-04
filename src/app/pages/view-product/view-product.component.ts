@@ -4,6 +4,7 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../products/interfaces/product.interface';
 import { CurrencyPipe } from '@angular/common';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
+import { ItemsCartService } from '../../cart-shopping/items-cart.service';
 
 @Component({
   selector: 'app-view-product',
@@ -13,6 +14,7 @@ import { LoaderComponent } from '../../shared/components/loader/loader.component
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewProductComponent {
+  cartService = inject(ItemsCartService);
   activatedRoute = inject(ActivatedRoute);
   productService = inject(ProductService);
   slug = this.activatedRoute.snapshot.paramMap.get('slug');
