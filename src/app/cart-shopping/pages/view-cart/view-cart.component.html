@@ -31,7 +31,7 @@
                 <span>Total:</span>
                 <span>{{cartService._subtotal() | currency}}</span>
             </p>
-            <button class="btn btn-info w-full" [disabled]="cartService._items().length === 0">Continuar con la compra</button>
+            <button class="btn btn-info w-full" routerLink="/payments/check" [disabled]="cartService._items().length === 0">Continuar con la compra</button>
         </section>
     </main>
 </section>

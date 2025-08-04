@@ -1,6 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { Product } from '../products/interfaces/product.interface';
 import { InCart } from './interfaces/in-cart.interface';
+import { ProductInSale } from '../interfaces/create-sale.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -54,5 +55,19 @@ export class ItemsCartService {
     this.items.update((data) =>
       data.filter((product) => product.product.id != id)
     );
+  }
+
+  /**
+   * Transform items in sale to ProductInSale array interface, use it to make request to backend
+   */
+  toProductInSale(): ProductInSale[]{
+    return this.items().map((item): ProductInSale => ({product_id: item.product.id, quantity: item.quantity}));
+  }
+
+  /**
+   * 
+   */
+  removeAll(){
+    this.items.set([]);
   }
 }

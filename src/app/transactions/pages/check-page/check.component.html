@@ -1,0 +1,42 @@
+<form class="my-5 mx-auto w-[90%] xl:w-1/2" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1 class="font-black text-5xl">Completa tu compra</h1>
+    <p>Tan solo falta un poco más para finalizar tu pedido ;)</p>
+
+    <!-- Mapa -->
+    <div class="my-4">
+        <h2 class="text-2xl mb-3">Ubicación geográfica</h2>
+        <shared-mini-map (clickedMap)="onClickedMap($event)" [height]="20"/>
+        <div class="flex justify-between gap-2">
+            <app-input [fg]="form" label="Longitud" [type]="typesInput.NUMBER" placeholder="Longitud"
+                controlName="lng" />
+            <app-input [fg]="form" label="Altitud" [type]="typesInput.NUMBER" placeholder="Altitud" controlName="lat" />
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- Data -->
+    <section class="grid grid-cols-2 gap-4">
+        <h2 class="text-2xl col-span-2 mb-3">Información para la entrega</h2>
+        <app-input [fg]="form" label="Calle" [type]="typesInput.TEXT" placeholder="Añade la calle de entrega"
+            controlName="street" />
+        <app-input [fg]="form" label="Ciudad" [type]="typesInput.TEXT" placeholder="Añade la ciudad de entrega"
+            controlName="city" />
+        <app-input [fg]="form" label="Número interno" [type]="typesInput.TEXT"
+            placeholder="Número interno de tu domicilio" controlName="internal_number" />
+        <app-input [fg]="form" label="Número externo" [type]="typesInput.TEXT"
+            placeholder="Número externo de tu domicilio" controlName="external_number" />
+
+        <app-input [fg]="form" label="Fecha de entrega" [type]="typesInput.DATETIME_LOCAL" placeholder=""
+            controlName="due_date" />
+
+        <app-text-area [fg]="form" controlName="references" label="Referencias"
+            placeholder="Escribe una mínima referencia para tu domicilio" />
+    </section>
+
+    <!-- Pago -->
+    <!-- <section>
+        <h2 class="text-2xl mb-3">Datos para el pago</h2>
+    </section> -->
+
+    <button type="submit" class="btn btn-success mt-3">Realizar pago...</button>
+</form>

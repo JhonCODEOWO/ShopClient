@@ -2,27 +2,16 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormHelper } from '../../form-helpers';
 
-export enum TypesInput {
-  TEXT = 'text', 
-  NUMBER = 'number', 
-  EMAIL = 'email', 
-  PASSWORD = 'email', 
-  DATETIME_LOCAL = 'datetime-local', 
-}
-
 @Component({
-  selector: 'app-input',
+  selector: 'app-text-area',
   imports: [ReactiveFormsModule],
-  templateUrl: './input.component.html',
+  templateUrl: './text-area.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputComponent {
+export class TextAreaComponent {
   formHelpers = FormHelper;
   fg = input.required<FormGroup>();
-  //Name for the input
   controlName = input.required<string>();
   label = input.required<string>();
-  type = input.required<TypesInput>();
   placeholder = input.required<string>();
-  disabled = input<boolean>(false);
 }
