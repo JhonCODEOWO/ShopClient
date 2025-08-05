@@ -1,6 +1,9 @@
 <header class="navbar bg-base-300 shadow-sm top-0 sticky z-50">
-  <div class="flex-1">
-    <a class="btn btn-ghost text-xl">daisyUI</a>
+  <div class="flex-1 flex gap-x-10">
+    <a class="btn btn-ghost text-xl" routerLink="">daisyUI</a>
+    <div class="flex items-center gap-x-2">
+      <input type="text" class="input block" placeholder="Buscar productos..." #searchInput (keyup.enter)="search(searchInput.value)">
+    </div>
   </div>
   <div class="flex-none">
     @if (!user()) {

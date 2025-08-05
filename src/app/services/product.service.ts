@@ -12,8 +12,8 @@ export class ProductService {
   route = `${environment.API_URL}/products`;
   httpClient = inject(HttpClient);
 
-  searchProducts(): Observable<PaginatedResponse<Product>>{
-    return this.httpClient.get<PaginatedResponse<Product>>(`${this.route}/list`);
+  searchProducts(paginated = 1, page = 0, query: string = ""): Observable<PaginatedResponse<Product>>{
+    return this.httpClient.get<PaginatedResponse<Product>>(`${this.route}/list?paginated=${paginated}&page=${page}&query=${query}`);
   }
 
   findProduct(slug: string): Observable<Product> {

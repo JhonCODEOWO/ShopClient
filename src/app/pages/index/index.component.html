@@ -2,6 +2,9 @@
     <h2 class="text-white text-5xl font-black">Conoce nuestros increíbles productos</h2>
     <p class="text-center absolute bottom-[5rem] text-white text-5xl animate-pulse"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="currentColor" d="M11 4v12.175l-5.6-5.6L4 12l8 8l8-8l-1.4-1.425l-5.6 5.6V4z"/></svg></p>
 </div>
-<div class="flex justify-center mt-2">
+<div class="flex flex-col items-center mt-2">
     <product-list [products]="products()?.data ?? []"/>
+    @if (products()?.next_page_url != null) {
+        <button class="btn btn-ghost w-[80%] border m-3 border-secondary" (click)="onLoadMore()">Cargar más...</button>
+    }
 </div>

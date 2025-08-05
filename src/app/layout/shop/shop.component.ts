@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 import { ItemsCartService } from '../../cart-shopping/items-cart.service';
 import { CurrencyPipe } from '@angular/common';
@@ -11,6 +11,8 @@ import { CurrencyPipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutShopComponent {
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
   authService = inject(AuthService);
   cartService = inject(ItemsCartService);
   cartItems = this.cartService._items;
@@ -18,5 +20,9 @@ export class LayoutShopComponent {
 
   logout(){
     this.authService.logout().subscribe(result => console.log(result));
+  }
+
+  search(query: string){
+    this.router.navigate(['search'], {queryParams: {query}});
   }
 }

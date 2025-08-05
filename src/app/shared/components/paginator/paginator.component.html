@@ -1,0 +1,5 @@
+<div class="join">
+    @for (item of links(); track $index) {
+        <button class="join-item btn" [innerHTML]="item.label" [class.btn-active]="item.active" (click)="onPageClick(item.label)"></button>
+    }
+</div>

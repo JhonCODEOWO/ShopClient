@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { PaginatedResponse } from '../../shared/interfaces/get-all.interfacte';
 import { Product } from '../../products/interfaces/product.interface';
@@ -15,8 +15,23 @@ export class IndexComponent {
   productService = inject(ProductService);
 
   products = signal<PaginatedResponse<Product> | null>(null);
+  currentPage = computed(() => {
+    return this.products()?.current_page ?? 0;
+  })
 
   loadProducts = effect(() => {
     this.productService.searchProducts().subscribe(data => this.products.set(data));
   })
+
+  onLoadMore(){
+    this.productService.searchProducts(1, this.currentPage() + 1)
+      .subscribe(paginatedResponse => this.products.update((prev) => {
+        if(!prev) return {...paginatedResponse};
+        return {
+          ...paginatedResponse,
+          data: [...prev.data, ...paginatedResponse.data]
+        }
+      })
+    );
+  }
 }
