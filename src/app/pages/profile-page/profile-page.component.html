@@ -1,0 +1,33 @@
+@if (user()) {
+<main class="grid grid-cols-2 gap-x-5 mx-auto my-5 w-[90%] shadow-lg border border-primary p-3 rounded">
+    <form (submit)="onSubmit()" [formGroup]="profileForm" class="grid grid-cols-2 gap-2">
+        <h2 class="text-3xl text-center col-span-2">Perfil de usuario</h2>
+        <fieldset class="fieldset col-span-2">
+            <img [src]="user()?.profile_picture_url" alt="" width="200" height="200" class="rounded-full mx-auto my-0">
+            <legend class="fieldset-legend">Imagen de perfil</legend>
+            <input type="file" class="file-input" formControlName="profile_picture">
+        </fieldset>
+        <app-input [fg]="profileForm" controlName="name" label="Nombre del usuario" [type]="typesInput.TEXT"
+            placeholder="Nombre del usuario" />
+        <app-input [fg]="profileForm" controlName="email" label="Correo electrónico" [type]="typesInput.TEXT"
+            placeholder="Escribe un correo válido" />
+        <app-input [fg]="profileForm" controlName="password" label="Contraseña" [type]="typesInput.TEXT"
+            placeholder="Escribe una contraseña de 8 caracteres" />
+        <app-input [fg]="profileForm" controlName="password_confirmation" label="Confirma la contraseña"
+            [type]="typesInput.TEXT" placeholder="Repite la contraseña" />
+        <button class="btn btn-info col-span-2">Actualizar información</button>
+    </form>
+
+    <section>
+        <h2 class="text-3xl text-center">Historial de compras</h2>
+        <div class="min-h-[100%] flex items-center justify-center">
+            <p class="text-error">No has realizado compras aún</p>
+        </div>
+    </section>
+</main>
+} @else {
+<div>
+
+</div>
+<shared-loader />
+}

@@ -43,13 +43,14 @@ export class AuthService {
     return this.httpClient.delete<boolean>(`${this.route}/logout`).pipe(tap((success) => this.handleLogout()));
   }
 
-  getUser(): Observable<UserLogged>{
+  getUser(): Observable<UserLogged | null>{
+    if(!this.token()) return of(null);
     return this.httpClient.get<UserLogged>(`${this.route}/user`);
   }
 
   initializeUser(): UserLogged | null{
     const data = localStorage.getItem('userData');
-    if(!data) return null;
+    if(!data || !this.token()) return null;
     return JSON.parse(data);
   }
 }
