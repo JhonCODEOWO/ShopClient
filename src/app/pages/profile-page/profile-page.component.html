@@ -2,10 +2,14 @@
 <main class="grid grid-cols-2 gap-x-5 mx-auto my-5 w-[90%] shadow-lg border border-primary p-3 rounded">
     <form (submit)="onSubmit()" [formGroup]="profileForm" class="grid grid-cols-2 gap-2">
         <h2 class="text-3xl text-center col-span-2">Perfil de usuario</h2>
+        <p class="text-sm text-info col-span-2">*Al actualizar se necesita un inicio de sesión nuevo.</p>
         <fieldset class="fieldset col-span-2">
-            <img [src]="user()?.profile_picture_url" alt="" width="200" height="200" class="rounded-full mx-auto my-0">
+            <img [src]="imgSrc()" alt="" width="200" height="200" class="rounded-full mx-auto my-0">
             <legend class="fieldset-legend">Imagen de perfil</legend>
-            <input type="file" class="file-input" formControlName="profile_picture">
+            <input type="file" class="file-input w-full" #inputFile (change)="fileChanges($event)">
+            @if (profileForm.controls.profile_picture.dirty || profileForm.controls.profile_picture.touched) {
+                <p class="text-error">{{formHelpers.showError(profileForm.controls.profile_picture)}}</p>
+            }
         </fieldset>
         <app-input [fg]="profileForm" controlName="name" label="Nombre del usuario" [type]="typesInput.TEXT"
             placeholder="Nombre del usuario" />
@@ -15,6 +19,7 @@
             placeholder="Escribe una contraseña de 8 caracteres" />
         <app-input [fg]="profileForm" controlName="password_confirmation" label="Confirma la contraseña"
             [type]="typesInput.TEXT" placeholder="Repite la contraseña" />
+        <p class="text-error col-span-2 text-xs">{{formHelpers.showError(profileForm)}}</p>
         <button class="btn btn-info col-span-2">Actualizar información</button>
     </form>
 

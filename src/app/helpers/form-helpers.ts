@@ -21,8 +21,11 @@ export class FormHelper {
         case 'minlength':
           return `Este campo debe tener mínimo ${value.requiredLength} caracteres`;
 
+        case 'notMatchFields':
+          return `Los campos de ${value.fieldNames} deben coincidir`
+
         default:
-          return 'No se ha definido una descripción para el error ' + key;
+          return 'No se ha definido una descripción para el error ' + key + ' ' + value;
       }
     }
     return 'No se ha encontrado la key dentro de ValidationErrors';

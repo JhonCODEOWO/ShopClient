@@ -43,6 +43,10 @@ export class AuthService {
     return this.httpClient.delete<boolean>(`${this.route}/logout`).pipe(tap((success) => this.handleLogout()));
   }
 
+  /**
+   * Request user data from backend using token in request
+   * @returns Observable<UserLogged | null>
+   */
   getUser(): Observable<UserLogged | null>{
     if(!this.token()) return of(null);
     return this.httpClient.get<UserLogged>(`${this.route}/user`);
