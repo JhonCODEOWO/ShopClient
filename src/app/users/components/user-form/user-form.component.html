@@ -1,12 +1,4 @@
-@if (user()) {
-<main class="grid grid-cols-2 gap-x-5 mx-auto my-5 w-[90%] shadow-lg border border-primary p-3 rounded">
-    <section>
-        <h2 class="text-3xl">Perfil de usuario</h2>
-        <user-form [user]="user()"/>
-    </section>
-    <!-- <form (submit)="onSubmit()" [formGroup]="profileForm" class="grid grid-cols-2 gap-2">
-        <h2 class="text-3xl text-center col-span-2">Perfil de usuario</h2>
-        <p class="text-sm text-info col-span-2">*Al actualizar se necesita un inicio de sesión nuevo.</p>
+<form (submit)="onSubmit()" [formGroup]="profileForm" class="grid grid-cols-2 gap-2">
         <fieldset class="fieldset col-span-2">
             <img [src]="imgSrc()" alt="" width="200" height="200" class="rounded-full mx-auto my-0">
             <legend class="fieldset-legend">Imagen de perfil</legend>
@@ -25,18 +17,4 @@
             [type]="typesInput.TEXT" placeholder="Repite la contraseña" />
         <p class="text-error col-span-2 text-xs">{{formHelpers.showError(profileForm)}}</p>
         <button class="btn btn-info col-span-2">Actualizar información</button>
-    </form> -->
-
-    <section>
-        <h2 class="text-3xl text-center">Historial de compras</h2>
-        <div class="min-h-[100%] flex items-center justify-center">
-            <p class="text-error">No has realizado compras aún</p>
-        </div>
-    </section>
-</main>
-} @else {
-<div>
-
-</div>
-<shared-loader />
-}
+    </form>

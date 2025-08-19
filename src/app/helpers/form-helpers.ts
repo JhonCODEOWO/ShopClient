@@ -24,6 +24,9 @@ export class FormHelper {
         case 'notMatchFields':
           return `Los campos de ${value.fieldNames} deben coincidir`
 
+        case 'uniqueEmail':
+          return `El correo ya ha sido utilizado, por favor ingrese otro.`
+
         default:
           return 'No se ha definido una descripción para el error ' + key + ' ' + value;
       }

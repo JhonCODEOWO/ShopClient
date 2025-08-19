@@ -1,4 +1,4 @@
-<h1 class="text-2xl mb-10">Inicia sesión para poder realizar compras ¡Y mucho más!</h1>
+<h1 class="text-2xl mb-5">Inicia sesión para poder realizar compras ¡Y mucho más!</h1>
 <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
     @if (success()) {
         <div role="alert" class="alert alert-error my-3">
@@ -7,5 +7,9 @@
     }
     <app-input controlName="email" [type]="types.TEXT" [fg]="loginForm" label="Email" placeholder="Correo electrónico de tu cuenta"/>
     <app-input controlName="password" [type]="types.PASSWORD" [fg]="loginForm" label="Password" placeholder="Contraseña de tu cuenta"/>
+    <div class="flex justify-between text-info underline">
+        <a routerLink="/auth/createAccount">Crear cuenta</a>
+        <a href="">Olvide mi contraseña</a>
+    </div>
 <button class="btn btn-neutral mt-4" [disabled]="loginForm.invalid">Login</button>
 </form>
