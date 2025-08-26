@@ -1,8 +1,10 @@
-<h1 class="text-4xl m-4">Mostrando resultados de: {{query()}}</h1>
-
 @if (products()) {
-    <section class="flex flex-col items-center gap-y-5">
-        <product-list [products]="products()!.data"/>
-        <shared-paginator [links]="products()!.links" (pageClicked)="handlePaginatorClick($event)"/>
-    </section>
+<section class="flex flex-col items-center gap-y-5 min-h-[calc(100vh-104px)] my-3">
+    @if (products()?.data?.length !== 0) {
+    <product-list [products]="products()!.data" />
+    <shared-paginator [links]="products()!.links" (pageClicked)="handlePaginatorClick($event)" />
+    } @else {
+        <p class="mx-auto my-auto text-info text-lg">No se han encontrado resultados</p>
+    }
+</section>
 }

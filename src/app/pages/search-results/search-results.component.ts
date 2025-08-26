@@ -26,7 +26,7 @@ export class SearchResultsComponent {
   products = signal<PaginatedResponse<Product> | null>(null);
 
   searchProducts = effect(() => {
-    this.productsService.searchProducts(1, this.page(), this.query() ?? '').subscribe(paginated => this.products.set(paginated));
+    if(this.query() != '') this.productsService.searchProducts(1, this.page(), this.query() ?? '').subscribe(paginated => this.products.set(paginated));
   })
 
   handlePaginatorClick(page: number){
