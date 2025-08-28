@@ -3,10 +3,11 @@ import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/route
 import { AuthService } from '../../auth/services/auth.service';
 import { ItemsCartService } from '../../cart-shopping/items-cart.service';
 import { CurrencyPipe } from '@angular/common';
+import { ThemePickerComponent } from "../../components/theme-picker/theme-picker.component";
 
 @Component({
   selector: 'layout-shop',
-  imports: [RouterOutlet,RouterLink, CurrencyPipe],
+  imports: [RouterOutlet, RouterLink, CurrencyPipe, ThemePickerComponent],
   templateUrl: './shop.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,37 +1,38 @@
-@if (user()) {
-<main class="grid grid-cols-2 gap-x-5 mx-auto my-5 w-[90%] shadow-lg border border-primary p-3 rounded">
+@if (user() && sales()) {
+<main class="grid bg-base-200 grid-cols-2 gap-x-5 mx-auto my-5 w-[90%] shadow-lg border border-primary p-3 rounded">
     <section>
         <h2 class="text-3xl">Perfil de usuario</h2>
-        <user-form [user]="user()"/>
+        <user-form [user]="user()" />
     </section>
-    <!-- <form (submit)="onSubmit()" [formGroup]="profileForm" class="grid grid-cols-2 gap-2">
-        <h2 class="text-3xl text-center col-span-2">Perfil de usuario</h2>
-        <p class="text-sm text-info col-span-2">*Al actualizar se necesita un inicio de sesión nuevo.</p>
-        <fieldset class="fieldset col-span-2">
-            <img [src]="imgSrc()" alt="" width="200" height="200" class="rounded-full mx-auto my-0">
-            <legend class="fieldset-legend">Imagen de perfil</legend>
-            <input type="file" class="file-input w-full" #inputFile (change)="fileChanges($event)">
-            @if (profileForm.controls.profile_picture.dirty || profileForm.controls.profile_picture.touched) {
-                <p class="text-error">{{formHelpers.showError(profileForm.controls.profile_picture)}}</p>
-            }
-        </fieldset>
-        <app-input [fg]="profileForm" controlName="name" label="Nombre del usuario" [type]="typesInput.TEXT"
-            placeholder="Nombre del usuario" />
-        <app-input [fg]="profileForm" controlName="email" label="Correo electrónico" [type]="typesInput.TEXT"
-            placeholder="Escribe un correo válido" />
-        <app-input [fg]="profileForm" controlName="password" label="Contraseña" [type]="typesInput.TEXT"
-            placeholder="Escribe una contraseña de 8 caracteres" />
-        <app-input [fg]="profileForm" controlName="password_confirmation" label="Confirma la contraseña"
-            [type]="typesInput.TEXT" placeholder="Repite la contraseña" />
-        <p class="text-error col-span-2 text-xs">{{formHelpers.showError(profileForm)}}</p>
-        <button class="btn btn-info col-span-2">Actualizar información</button>
-    </form> -->
 
     <section>
         <h2 class="text-3xl text-center">Historial de compras</h2>
-        <div class="min-h-[100%] flex items-center justify-center">
+
+        <ul class="flex flex-col gap-3 overflow-y-auto max-h-[70vh] mt-3">
+            @for (item of sales()?.data; track item.id) {
+            <li class="bg-base-100 border border-base-300 rounded p-4 flex gap-x-3">
+                <div class="grid gap-2 grid-cols-2">
+                    @for (product of item.products.slice(0,2); track product.id) {
+                    <img [src]="product.image_url" alt="" class="w-20 rounded-full">
+                    } @empty {
+                        <p class="col-span-2 text-center text-info flex items-center justify-center">Sin imágenes para mostrar</p>
+                    }
+                </div>
+                <div>
+                    <p><span class="font-bold">Ciudad:</span> {{item.city}}</p>
+                    <p><span class="font-bold">Elementos en la venta:</span> {{item.products.length}}</p>
+                    <p><span class="font-bold">Referencias:</span> {{item.references}}</p>
+                    <p><span class="font-bold">Pago total previsto:</span> {{item.total_preview | currency}}</p>
+                </div>
+            </li>
+            } @empty {
             <p class="text-error">No has realizado compras aún</p>
-        </div>
+            }
+            @if (sales()?.next_page_url) {
+                <button class="btn btn-ghost btn-info w-full" (click)="onLoadMore()">Cargar más</button>
+            }
+        </ul>
+
     </section>
 </main>
 } @else {

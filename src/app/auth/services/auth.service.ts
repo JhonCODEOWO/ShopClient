@@ -3,6 +3,8 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { catchError, map, Observable, of, take, tap } from 'rxjs';
 import { UserLogged } from '../interfaces/user-logged.interface';
+import { PaginatedResponse } from '../../shared/interfaces/get-all.interfacte';
+import { SaleInterface } from '../../interfaces/sale.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +58,10 @@ export class AuthService {
     const data = localStorage.getItem('userData');
     if(!data || !this.token()) return null;
     return JSON.parse(data);
+  }
+
+  //Get all sales made by this user
+  getSales(date: string = '', page: number = 1): Observable<PaginatedResponse<SaleInterface>>{
+    return this.httpClient.get<PaginatedResponse<SaleInterface>>(`${environment.API_URL}/sales`, {params: {searchQuery: date, page}});
   }
 }

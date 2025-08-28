@@ -8,10 +8,13 @@ import { matchPassword } from '../../shared/validators/match-password';
 import { FormHelper } from '../../helpers/form-helpers';
 import { UserProfile, UserService } from '../../users/services/user.service';
 import { UserFormComponent } from "../../users/components/user-form/user-form.component";
+import { PaginatedResponse } from '../../shared/interfaces/get-all.interfacte';
+import { SaleInterface } from '../../interfaces/sale.interface';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile-page',
-  imports: [LoaderComponent, ReactiveFormsModule, UserFormComponent],
+  imports: [LoaderComponent, ReactiveFormsModule, UserFormComponent, CurrencyPipe],
   templateUrl: './profile-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -20,8 +23,11 @@ export class ProfilePageComponent {
   formHelpers = FormHelper;
   authService = inject(AuthService);
   userService = inject(UserService);
-  user = signal<UserLogged | null>(null);
-  imgSrc = signal<string>('');
+  page = signal(1);
+  
+  user = signal<UserLogged | null>(null); //Data of user
+  sales = signal<PaginatedResponse<SaleInterface> | null>(null);
+  imgSrc = signal<string>(''); //Url de la imagen a mostrar
 
   loadUser = effect(() => {
     this.authService.getUser().subscribe((data) => {
@@ -30,49 +36,19 @@ export class ProfilePageComponent {
     });
   })
 
-  // fb = inject(FormBuilder);
-  // profileForm = this.fb.group({
-  //   name: ['',[Validators.minLength(6)]],
-  //   email: ['',[Validators.email]],
-  //   password: ['', [Validators.minLength(8)]],
-  //   password_confirmation: ['', [Validators.minLength(8)]],
-  //   profile_picture: this.fb.control<File | null>(null, {validators: []}),
-  // }, {
-  //   validators: [matchPassword('password', 'password_confirmation')]
-  // })
+  loadSales = effect(() => {
+    this.authService.getSales().subscribe((sales) => this.sales.set(sales))
+  })
 
-  // loadForm = effect(() => {
-  //   if(this.user()) {
-  //     this.profileForm.patchValue({name: this.user()?.name, email: this.user()?.email});
-  //   }
-  // })
-
-  // onSubmit(){
-  //   this.profileForm.markAllAsTouched();
-  //   console.log(typeof this.profileForm.controls.profile_picture);
-  //   console.log({value: this.profileForm.value, isValid: this.profileForm.valid});
-  //   if(this.profileForm.invalid) return;
-
-  //   const value: Partial<UserProfile> = {...this.profileForm.value as any};
-
-  //   this.userService.update(value).subscribe({
-  //     next: (updated) => {
-  //       if(!updated) return;
-
-  //       this.authService.handleLogout();
-  //     },
-  //     error: (error) => {
-  //       console.log(error);
-  //     }
-  //   });
-  // }
-
-  // fileChanges(event: Event){
-  //   const files = (event.target as HTMLInputElement).files ?? [];
-
-  //   if(!files) return;
-    
-  //   this.imgSrc.set(URL.createObjectURL(files[0]));
-  //   this.profileForm.patchValue({profile_picture: files[0]});
-  // }
+  onLoadMore(){
+    this.page.update((prev) => prev+1);
+    this.authService.getSales('', this.page()).subscribe((sales) => this.sales.update((actual) => {
+      if(!actual) return sales;
+      return {
+        ...actual,
+        ...sales,
+        data: [...actual.data, ...sales.data]
+      }
+    }))
+  }
 }
