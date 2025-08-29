@@ -2,7 +2,7 @@
   <div class="flex-1 flex gap-x-10">
     <a class="btn btn-ghost text-xl" routerLink="">daisyUI</a>
     <div class="flex items-center gap-x-2">
-      <input type="text" class="input block" placeholder="Buscar productos..." #searchInput (keyup.enter)="search(searchInput.value)">
+      <input type="text" class="input block focus:outline-none" placeholder="Buscar productos..." #searchInput (keyup.enter)="search(searchInput.value)">
     </div>
   </div>
   <div class="flex">

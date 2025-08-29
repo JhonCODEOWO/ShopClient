@@ -1,16 +1,28 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-theme-picker',
   imports: [],
-  template: `<label class="swap swap-rotate">
+  template: `<label class="swap swap-rotate h-full">
     <!-- this hidden checkbox controls the state -->
-    <input type="checkbox" name="theme" class="theme-controller" value="night" (change)="onApplyTheme($event)" [checked]="themeService.actualTheme() === 'night'"/>
+    <input
+      type="checkbox"
+      name="theme"
+      class="theme-controller"
+      value="night"
+      (change)="onApplyTheme($event)"
+      [checked]="themeService.actualTheme() === 'night'"
+    />
 
     <!-- sun icon -->
     <svg
-      class="swap-off h-10 w-10 fill-current"
+      class="swap-off h-5 w-5 fill-current"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
@@ -20,7 +32,16 @@ import { ThemeService } from '../../services/theme.service';
     </svg>
 
     <!-- moon icon -->
-    <svg class="swap-on h-10 w-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21q-3.75 0-6.375-2.625T3 12t2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21"/></svg>
+    <svg
+      class="swap-on h-5 w-5 fill-current"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        d="M12 21q-3.75 0-6.375-2.625T3 12t2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21"
+      />
+    </svg>
   </label>`,
   styleUrl: './theme-picker.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,8 +49,8 @@ import { ThemeService } from '../../services/theme.service';
 export class ThemePickerComponent {
   themeService = inject(ThemeService);
 
-  onApplyTheme(event: Event){
+  onApplyTheme(event: Event) {
     const element = event.target as HTMLInputElement;
-    this.themeService.setTheme((element.checked)? element.value: 'wireframe');
+    this.themeService.setTheme(element.checked ? element.value : 'wireframe');
   }
 }
