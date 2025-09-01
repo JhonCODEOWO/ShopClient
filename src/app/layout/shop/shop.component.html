@@ -1,12 +1,20 @@
 <header class="navbar bg-base-300/85 backdrop-blur-2xl shadow-sm top-0 sticky z-50">
   <div class="flex-1 flex gap-x-10">
-    <a class="btn btn-ghost text-xl" routerLink="">daisyUI</a>
+    @if (settingService.settings()) {
+    <a class="btn btn-ghost text-xl flex gap-3" routerLink="">
+      <img src="{{settingService.settings()!['APP_ICON']}}" alt="">
+      {{settingService.settings()!['APP_NAME']}}
+    </a>
+    } @else {
+      <span class="loading loading-dots loading-md"></span>
+    }
     <div class="flex items-center gap-x-2">
-      <input type="text" class="input block focus:outline-none" placeholder="Buscar productos..." #searchInput (keyup.enter)="search(searchInput.value)">
+      <input type="text" class="input block focus:outline-none" placeholder="Buscar productos..." #searchInput
+        (keyup.enter)="search(searchInput.value)">
     </div>
   </div>
   <div class="flex">
-    <app-theme-picker/>
+    <app-theme-picker />
     @if (!user()) {
     <a routerLink="/auth/login" class="btn btn-outline btn-info">Iniciar sesión...</a>
     } @else {
@@ -33,8 +41,7 @@
     <div class="dropdown dropdown-end mr-3">
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
-          <img [alt]="user()?.name"
-            [src]="user()?.profile_picture_url" />
+          <img [alt]="user()?.name" [src]="user()?.profile_picture_url" />
         </div>
       </div>
       <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
